@@ -18,20 +18,30 @@
         font-family: Arial, Helvetica, sans-serif;
         text-align: center;
       }
+
+      .List {
+        display: flex;
+        overflow-x: scroll;
+        margin: 0;
+        padding: 0;
+      }
+
+      .Item {
+        display: flex;
+        flex-direction: column;
+        margin: 0 2px;
+      }
     </style>
   </head>
   <body>
     <main>
-      Avant j'étais moche dans la tess,<br />
-      aujourd'hui je plais à Eva Mendes
-
-      <ul>
-        {% for kitchen in kitchens %}
-        <li>
-          <span>{{ kitchen.name }}</span>
-          {# <img src="{{ kitchen.url }}" /> #}
-        </li>
-        {% endfor %}
+      <ul class="List">
+        {{each kitchens}}
+          <li class="Item">
+            <span>{{ $value.name }}</span>
+            <img width="350" height="200" src="{{ $value.url }}" />
+          </li>
+        {{/each}}
       </ul>
     </main>
   </body>

@@ -1,10 +1,9 @@
 const fs = require("fs");
-const nunjucks = require("nunjucks");
-
-nunjucks.configure({ autoescape: true });
+const artTemplate = require("art-template");
 
 const files = fs.readdirSync(__dirname + "/../images");
-const template = fs.readFileSync(`${__dirname}/../templates/index.njk`, "utf8");
+const template = fs.readFileSync(`${__dirname}/../templates/index.art`, "utf8");
+const render = artTemplate.compile(template);
 
 module.exports = (req, res) => {
   const data = files.map(fileName => ({
@@ -12,9 +11,7 @@ module.exports = (req, res) => {
     url: `https://${req.headers.host}/images/${fileName}`
   }));
 
-  const markup = nunjucks.renderString(template, {
-    kitchens: data
-  });
+  const markup = render({ kitchens: data });
 
   res.send(markup);
 };
